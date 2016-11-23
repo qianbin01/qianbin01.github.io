@@ -1,0 +1,100 @@
+---
+title: Portfolio
+layout: default
+---
+
+<!DOCTYPE html>
+<html class="no-js">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>QB - Timeline</title>
+		<link rel="stylesheet" type="text/css" href="css/timeline.css" />
+		<script src="js/modernizr.custom.js"></script>
+	</head>
+	<body>
+		<div class="container" style="margin:0;padding:0;width:100%;">
+			<header>
+				<img width="180" height="180" src="images/Q.png">
+				<h1>QB</h1>
+				<p>android开发爱好者<br>
+					专注android,空余时间捣腾捣腾服务器</p>
+			</header>
+			<div class="main">
+				<ul class="cbp_tmtimeline">
+					<li>
+						<div class="cbp_tmlabel">
+							<h2 id="boxoffice">友帮app</h2>
+							<time>2016.12</time>
+							<img src="images/work-yanshuo.jpg">
+							<ul>
+								<li>
+									"Yanshuo.io" is an online full-featured presentation software to create Web-based slides which are linkable, sharable, cross-platform and without delivery friction. It differentiate from traditional presentation tools such as Powerpoint and Keynote due to its web-friendly and its strong belief in Web.
+								</li>
+								<li class="skill">
+									<span><b>JS</b></span>
+									<span class="i-react"></span>
+									<span class="link"><a target="_blank" href="https://yanshuo.io">Try it</a></span>
+								</li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<div class="cbp_tmlabel">
+							<h2 id="boxoffice">Easy-bo</h2>
+							<time>2016.11</time>
+							<img src="images/work-wepiao-bo.jpg">
+							<ul>
+								<li>
+									Wepiao Boxoffice app provides huge amounts of data and visualization of movies and cinemas including times, box office, attendance, ranking with a real-time analyzing back-end, which available on Web, iOS and Android.<br> As the <b>Lead Front-end Developer this project</b>, we built this app in the <a href="https://en.wikipedia.org/wiki/Single-page_application">Single-page Application Model</a> to provide a more fluid user experience with awesome <a href="http://facebook.github.io/react/">React.js</a>
+								</li>
+								<li class="skill">
+									<span class="cbp_tmicon-phone"></span>
+									<span><b>JS</b></span>
+									<span class="i-react"></span>
+									<span class="link"><a target="_blank" href="http://piaofang.wepiao.com">Try it</a></span>
+								</li>
+							</ul>
+						</div>
+					</li>
+												
+					{% if site.duoshuo_username %}
+					<li>
+						<div class="cbp_tmlabel">
+			                <!-- 多说评论框 start -->
+			                <div class="comment">
+			                    <div class="ds-thread"
+									data-thread-key="{{site.duoshuo_username}}/portfolio"
+			                        data-title="{{page.title}}"
+			                        data-url="{{site.url}}{{site.baseurl}}{{page.url}}" >
+			                    </div>
+			                </div>
+			                <!-- 多说评论框 end -->
+						</div>
+					</li> 
+					{% endif %}
+				</ul>
+			</div>
+		</div>
+		{% if site.duoshuo_username %}
+		<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+		<script type="text/javascript">
+		    // dynamic User by Hux
+		    var _user = '{{site.duoshuo_username}}';
+
+		    // duoshuo comment query.
+		    var duoshuoQuery = {short_name: _user };
+		    (function() {
+		        var ds = document.createElement('script');
+		        ds.type = 'text/javascript';ds.async = true;
+		        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		        ds.charset = 'UTF-8';
+		        (document.getElementsByTagName('head')[0]
+		         || document.getElementsByTagName('body')[0]).appendChild(ds);
+		    })();
+		</script>
+		<!-- 多说公共JS代码 end -->
+		{% endif %}
+	</body>
+</html>

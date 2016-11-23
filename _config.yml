@@ -1,0 +1,117 @@
+# Site settings
+title: QB Blog
+SEOTitle: 钱斌Blog | 钱斌的个人站点
+header-img: img/home-bg.jpg
+email: 236490794@qq.com
+description: "安卓开发爱好者，喜欢健身，喜欢运动，喜欢打DOTA2，喜欢发现新鲜事物，喜欢大家与我交朋友--QB"
+keyword: "钱斌, QB钱斌, QB, QBandroid, android, @QB, 黄钱斌的博客, QB Blog, 博客, 个人网站, 安卓, 开发, 安卓开发, 移动, 移动开发."
+url: "https://qbfighting.cc"              # your host, for absolute URL
+baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
+
+
+
+# SNS settings
+RSS: false
+weibo_username:     5507403967
+zhihu_username:     qi-shi-de-xin-xin
+github_username:    qianbin01
+#twitter_username:  huxpro
+#facebook_username:  huxpro
+# linkedin_username:  firstname-lastname-idxxxx
+
+
+
+# Build settings
+# from 2016, 'pygments' is unsupported on GitHub Pages. Use 'rouge' for highlighting instead.
+highlighter: rouge
+permalink: pretty
+paginate: 10
+exclude: ["less","node_modules","Gruntfile.js","package.json","README.md","README.zh.md"]
+anchorjs: true                          # if you want to customize anchor. check out line:181 of `post.html`
+
+
+
+# Gems
+# from PR#40, to support local preview for Jekyll 3.0
+gems: [jekyll-paginate]
+
+
+
+# Markdown settings
+# replace redcarpet to kramdown,
+# although redcarpet can auto highlight code, the lack of header-id make the catalog impossible, so I switch to kramdown
+# document: http://jekyllrb.com/docs/configuration/#kramdown
+markdown: kramdown
+kramdown:
+  input: GFM                            # use Github Flavored Markdown !important
+
+
+
+# Disqus settings
+#disqus_username: _your_disqus_short_name_
+
+# Duoshuo settings
+duoshuo_username: 气势的信心
+# Share component is depend on Comment so we can NOT use share only.
+duoshuo_share: true                     # set to false if you want to use Comment without Sharing
+
+
+
+
+# Analytics settings
+# Baidu Analytics 
+ba_track_id: 63cdb010baf28a382ea8f426e8b924f7
+
+# Google Analytics
+# ga_track_id: 'UA-49627206-1'            # Format: UA-xxxxxx-xx
+# ga_domain: huangxuan.me
+
+
+
+# Sidebar settings
+sidebar: true                           # whether or not using Sidebar.
+sidebar-about-description: "写写代码，玩玩游戏，<br>做一个充实知足的人。"
+sidebar-avatar: /img/avatar_qb.png     # use absolute URL, seeing it's used in both `/` and `/about/`
+
+
+
+# Featured Tags
+featured-tags: true                     # whether or not using Feature-Tags
+featured-condition-size: 1              # A tag will be featured if the size of it is more than this condition value
+
+
+
+# Progressive Web Apps
+chrome-tab-theme-color: "#000000"
+service-worker: true
+
+
+
+# Friends
+friends: [
+    {
+        title: "咕咚",
+        href: "http://gudong.name"
+    },{
+        title: "Hux",
+        href: "http://huangxuan.me"
+    },{
+        title: "小鄧子",
+        href: "http://www.jianshu.com/users/df40282480b4/latest_articles"
+    },{
+        title: "开发技术前线",
+        href: "http://www.devtf.cn"
+    },{
+        title: "Hongyang",
+        href: "http://blog.csdn.net/lmj623565791"
+    },{
+        title: "郭霖",
+        href: "http://blog.csdn.net/sinyu890807/"
+    },{
+        title: "CodeKK",
+        href: "http://www.codekk.com/open-source-project-analysis"
+    },{
+        title: "技术小黑屋",
+        href: "http://droidyue.com"
+    }
+]
