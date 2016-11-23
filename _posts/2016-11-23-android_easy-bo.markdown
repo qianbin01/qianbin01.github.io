@@ -23,16 +23,27 @@ tags:
 # 截图
 
 ## 菜单
+
 ![](http://oh343spqg.bkt.clouddn.com/easy_bo_5.jpg)
+
 ## 音乐播放界面
+
 ![](http://oh343spqg.bkt.clouddn.com/easy_bo_2.png)
+
 ## 下载界面
+
 ![](http://oh343spqg.bkt.clouddn.com/easy_bo_3.png)
+
 ## 网络视频列表
+
 ![](http://oh343spqg.bkt.clouddn.com/easy_bo_4.png)
+
 ## 网络视频
+
 ![](http://oh343spqg.bkt.clouddn.com/easy_bo_1.png)
+
 ## 视频播放界面
+
 ![](http://oh343spqg.bkt.clouddn.com/easy_bo_6.jpg)
 
 ---
