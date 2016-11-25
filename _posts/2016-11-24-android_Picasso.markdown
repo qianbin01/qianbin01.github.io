@@ -25,7 +25,6 @@ tags:
   
   3. 自带内存和硬盘二级缓存功能<br>
   
----
 
 #  Picasso怎么用
 [github官方文档](https://github.com/square/picasso)<br>
