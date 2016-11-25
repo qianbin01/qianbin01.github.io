@@ -296,6 +296,7 @@ public Subscription subscribe(Subscriber subscriber) {
 或者可以看动图：
 ![](http://oh343spqg.bkt.clouddn.com/rxjava5.gif)
 除了 subscribe(Observer) 和 subscribe(Subscriber) ，subscribe() 还支持不完整定义的回调，RxJava 会自动根据定义创建出 Subscriber 。形式如下：<br>
+
 ``` java
 Action1<String> onNextAction = new Action1<String>() {
     // onNext()
