@@ -80,5 +80,5 @@ Retrofit,将网络请求交给了OkHttp处理，自身采用接口的方式，�
 
 # 后记
 目前比较火的一种网络异步请求方式为Rxjava+Retrofit，根据这个写了个demo<br>
-地址大家可以参考参考[mvp下rxjava+retrofit的登录网络请求demo](http://qbfighting.cc/2016/11/25/android_mvp下rxjava+retrofit/)
+地址大家可以参考参考[mvp下rxjava+retrofit的登录网络请求demo](http://qbfighting.cc/2016/11/24/android_mvp下rxjava+retrofit/)
 
