@@ -14,7 +14,7 @@ tags:
 
 > 在学习安卓的时候你是否经常被OOM、非UI线程更新等问题所苦恼？<br>Picasso,一行代码带你轻松解决图片加载。
 
-# Picasso是什么
+#  Picasso是什么
 
  picasso是Square公司开源的一个Android图形缓存库,[官方地址](http://square.github.io/picasso/)，可以实现图片下载和缓存功能。仅仅只需要**一行代码**就能完全实现图片的异步加载。<br>
   Picasso不仅实现了图片异步加载的功能，还解决android中加载图片时需要解决的常见问题：<br>
@@ -26,28 +26,34 @@ tags:
   3. 自带内存和硬盘二级缓存功能<br>
   
 ---
-# Picasso怎么用
+
+#  Picasso怎么用
 [github官方文档](https://github.com/square/picasso)<br>
 1.导入工程<br>
 Gradle
-``` java 
+
+```  java 
 compile 'com.squareup.picasso:picasso:2.5.2'
 ```
 
 Maven
-``` java
+
+```  java
 <dependency>
   <groupId>com.squareup.picasso</groupId>
   <artifactId>picasso</artifactId>
   <version>2.5.2</version>
 </dependency>
 ```
+
 <big><b>2.一行代码加载图片</b><big>
-``` java
+
+```  java
 Picasso.with(context).load(url).into(imageview);
 ```
 
 3.adapter中imageview加载问题
+
 ``` java
 @Override 
 public void getView(int position, View convertView, ViewGroup parent) {
@@ -59,8 +65,10 @@ public void getView(int position, View convertView, ViewGroup parent) {
   Picasso.with(context).load(url).into(view);
 }
 ```
+
 4.图片转换：转换图片以适应布局大小并减少内存占用
-``` java
+
+```  java
 Picasso.with(context)
   .load(url)
   .resize(50, 50)
@@ -68,8 +76,9 @@ Picasso.with(context)
   .into(imageView);
 ```
 
-资源文件的加载：除了加载网络图片picasso还支持加载Resources, assets, files, contentproviders中的资源文件。
-``` java
+5.资源文件的加载：除了加载网络图片picasso还支持加载Resources, assets, files, contentproviders中的资源文件。
+
+```  java
 Picasso.with(context).load(R.drawable.icon).into(imageView1);
 Picasso.with(context).load(new File(...)).into(imageView2);
 Picasso.with(context).load(bitmap).into(imageView3);
@@ -79,7 +88,8 @@ Picasso.with(context).load(bitmap).into(imageView3);
 
 从简单的一行代码加载图片开始看看到底干了些啥
 Picasso.with(context).load(url).into(imageView)
-``` java
+
+```  java
 public static Picasso with(Context context) {
         if (singleton == null) {
             singleton = new Builder(context).build();
@@ -112,6 +122,7 @@ public static Picasso with(Context context) {
                     transformer, stats, debugging);
         }
 ```
+
 从源码中可以看出,Picasso.with()的时候会将执行所需的所有必备元素创建出来，如缓存cache、执行executorService、调度dispatch等。在load()时创建Request，在into()中创建action、bitmapHunter，并最终交给dispatcher执行。<br>
 详细源码自行观察[github官方文档](https://github.com/square/picasso)
 
