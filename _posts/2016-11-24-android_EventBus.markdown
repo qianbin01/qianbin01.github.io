@@ -22,16 +22,19 @@ EventBus是Android下高效的发布/订阅事件总线机制。作用是可以�
 2. EventBus是事件总线， 遍历所有已经注册事件的订阅者们，找到里边的onEvent等4个方法，分发Event
 3. Subscriber是订阅者， 收到事件总线发下来的消息。即onEvent方法被执行。注意参数类型必须和发布者发布的参数一致。   
 
-#  EventBus 怎么搞
-[github官方文档](https://github.com/greenrobot/EventBus)详细说明
-在此简单的列出
-##  1.导入工程
+#  EventBus 怎么用
+[github官方文档](https://github.com/greenrobot/EventBus)<br>
+
+1.导入工程<br>
 Gradle:
-``` java
+    
+```  java
 compile 'org.greenrobot:eventbus:3.0.0'
 ```
+
 Maven:
-``` java 
+    
+```  java 
 <dependency>
     <groupId>org.greenrobot</groupId>
     <artifactId>eventbus</artifactId>
@@ -39,14 +42,16 @@ Maven:
 </dependency>
 ```
 
-##  2.定义事件
-``` java
+2.定义事件
+
+```  java
 //类名，成员变量可自行修改，保持发送时接受时一致即可
 public static class MessageEvent { /* Additional fields if needed */ }
 ```
 
-##  3.准备观察者
-``` java
+3.准备观察者
+
+```  java
 @Subscribe(threadMode = ThreadMode.MAIN)  //订阅在主线程，具体可参考文档有哪些方式
 public void onMessageEvent(MessageEvent event) {/* 这里做你需要做的事件 */};
 //也可通过以下方式 选择运行方式
@@ -55,8 +60,10 @@ public void onEventMainThread(MsgEvent1 msg)
 public void onEventBackgroundThread(MsgEvent1 msg)
 public void onEventAsync(MsgEvent1 msg)
 ```
+
 ps：Eventbus需要注册和反注册
-``` java
+
+```  java
 @Override
 public void onStart() {
     super.onStart();
@@ -70,8 +77,9 @@ public void onStop() {
 }
 ```
 
-##  4.发布事件
-``` java
+ 4.发布事件
+ 
+```  java
 EventBus.getDefault().post(new MessageEvent());
 ```
 
@@ -82,8 +90,10 @@ EventBus是一个很棒的工具，它可用来对程序组件进行解耦。
 使用自定义信息的形式代替了intent传递参数，减少书写错误产生的可能。
 
 # EventBus的简易demo
+
 Activity
-``` java
+
+```  java
 public class MainActivity extends AppCompatActivity {
     private Button btnPost;
 
@@ -119,9 +129,10 @@ public class MainActivity extends AppCompatActivity {
 }
 
 ```
+
 DemoEvent
 
-``` java
+```  java
 
 public class DemoEvent {
     public String msg;
