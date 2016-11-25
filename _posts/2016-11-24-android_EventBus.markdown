@@ -144,5 +144,5 @@ public class DemoEvent {
 ```
 
 布局文件较简单就不贴了<br>
-[demo地址](https://github.com/qianbin01/EventBusDemo)
+[demo-github地址](https://github.com/qianbin01/EventBusDemo)
 
