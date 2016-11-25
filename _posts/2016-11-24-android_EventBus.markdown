@@ -25,13 +25,13 @@ EventBus是Android下高效的发布/订阅事件总线机制。作用是可以�
 #  EventBus 怎么用
 [github官方文档](https://github.com/greenrobot/EventBus)详细说明
 在此简单的列出
-## 1.导入工程
+##  1.导入工程
 Gradle:
 ``` java
 compile 'org.greenrobot:eventbus:3.0.0'
 ```
 Maven:
-```java 
+``` java 
 <dependency>
     <groupId>org.greenrobot</groupId>
     <artifactId>eventbus</artifactId>
@@ -39,13 +39,13 @@ Maven:
 </dependency>
 ```
 
-## 2.定义事件
+##  2.定义事件
 ``` java
 //类名，成员变量可自行修改，保持发送时接受时一致即可
 public static class MessageEvent { /* Additional fields if needed */ }
 ```
 
-## 3.准备观察者
+##  3.准备观察者
 ``` java
 @Subscribe(threadMode = ThreadMode.MAIN)  //订阅在主线程，具体可参考文档有哪些方式
 public void onMessageEvent(MessageEvent event) {/* 这里做你需要做的事件 */};
@@ -70,7 +70,7 @@ public void onStop() {
 }
 ```
 
-## 4.发布事件
+##  4.发布事件
 ``` java
 EventBus.getDefault().post(new MessageEvent());
 ```
