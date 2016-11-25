@@ -22,7 +22,7 @@ EventBus是Android下高效的发布/订阅事件总线机制。作用是可以�
 2. EventBus是事件总线， 遍历所有已经注册事件的订阅者们，找到里边的onEvent等4个方法，分发Event
 3. Subscriber是订阅者， 收到事件总线发下来的消息。即onEvent方法被执行。注意参数类型必须和发布者发布的参数一致。   
 
-#  EventBus 怎么用
+#  EventBus 怎么搞
 [github官方文档](https://github.com/greenrobot/EventBus)详细说明
 在此简单的列出
 ##  1.导入工程
