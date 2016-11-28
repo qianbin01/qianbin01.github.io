@@ -36,13 +36,17 @@ User简单的请求类封装，Result结果类的封装，不进行展示
 
 # http包：
 HttpService.java
-```java
+
+``` java
 public interface HttpService {
     @GET("Login")
     Observable<Result> login(@Query("phone") String phone, @Query("password") String password);
 }
+```
 
 HttpMethods.java
+
+``` java
 public class HttpMethods {
     public static final String BASE_URL = "http://youbangserver.cn/YouBang/";
     private static final int DEFAULT_TIMEOUT = 5;
@@ -87,6 +91,7 @@ public class HttpMethods {
 # presenter包
 
 LoginPresenter.java
+
 ``` java
 public class LoginPresenter {
     private ILoginActivity loginActivity;
@@ -121,6 +126,7 @@ public class LoginPresenter {
 
 # view包：
 ILoginActivity.java
+
 ``` java
 public interface ILoginActivity {
     String getUserPhone();
@@ -135,6 +141,7 @@ public interface ILoginActivity {
 
 提供参数设置方法，及回调接口
 LoginActivity.java
+
 ```  java
 public class LoginActivity extends AppCompatActivity implements ILoginActivity {
     @Bind(R.id.etPhone)
@@ -180,6 +187,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivity {
     }
 }
 ```
+
 实现接口方法，持有presenter,对象，将事件传递给presenter类进行操作
 
 上效果图
