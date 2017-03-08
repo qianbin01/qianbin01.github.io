@@ -4,7 +4,7 @@ title:      "入门python"
 subtitle:   "世界很大，水很深，我什么都想学学"
 date:       2017-3-7 23:59:00
 author:     "QB"
-header-img: "img/contact-bg.jpg"
+header-img: "img/python-bg.jpg"
 catalog: true
 tags:
     - 2017
