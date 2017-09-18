@@ -1,0 +1,208 @@
+---
+layout:     post
+title:      "vue.js+flask+element-ui简易Demo"
+subtitle:   "简单点，搭建Demo的方式简单点"
+date:       2017-9-17 23:59:00
+author:     "QB"
+header-img: "img/vue.jpg"
+catalog: true
+tags:
+    - Vue.js
+    - Flask
+    - python
+---
+
+> “多学学，多搞搞”
+
+
+
+## 前言
+
+最近工作中用到Vue.js加上一直在用的Flask,所以准备写个小小的demo巩固下。
+
+ps：之前一直用unpkg的各种包，发现会出问题，所以demo中将所有需要用到的js包放在本地当中。
+
+项目使用到Flask+flask_jsglue+vue.js+element-ui+data-table.js+axios.js
+
+## 正文
+demo很简单，最基本的flask应用加上几个api方法<br>
+index.py
+``` Python
+app = Flask(__name__)
+jsglue = JSGlue()
+jsglue.init_app(app) # 让js文件中可以使用url_for方法
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/get_data')
+def get_base_data():
+    return jsonify({'results': results})
+
+@app.route('/add', methods=['POST'])
+def add():
+    name = request.json.get('name')
+    results.append({'name': name, 'index': str(uuid1())})#uuid让index不唯一，实际开发中可以通过数据库的id来代替
+    return jsonify({'message': '添加成功！'}), 200
+
+@app.route('/update', methods=['PUT'])
+def update():
+    name = request.json.get('name')
+    index = request.json.get('index')
+    for item in results:
+        if item['index'] == index:
+            item['name'] = name
+            break
+    return jsonify({'message': '编辑成功！'}), 200
+
+@app.route('/delete', methods=['DELETE'])
+def delete():
+    name = request.args.get('name')
+    index = request.args.get('index')
+    results.remove({'name': name, 'index': index})
+    return jsonify({'message': '删除成功！'}), 200
+
+if __name__ == '__main__':
+    app.run(debug=True)
+```
+
+template
+
+```JavaScript
+<script type="text/x-template" id="tabel-detail-template">
+    <div>
+        <data-tables :data='tableData' :actions-def="getActionsDef()"
+                     :pagination-def="getPaginationDef()"
+                     :row-action-def="getRowActionsDef()"
+                     action-col-width="80">
+            <el-table-column label="关键词" min-width="400">
+                <template scope="scope">
+                    <a :href="scope.row.url" target="_blank" v-text="scope.row.name"></a>
+                </template>
+            </el-table-column>
+        </data-tables>
+        <el-dialog :title="formTitle" :visible.sync="dialogFormVisible">
+            <el-form :model="form" @submit.native.prevent>
+                <el-form-item label="数据">
+                    <el-input ref="valueInput" v-model.trim="form.name" auto-complete="off"
+                              @keyup.enter.native="createOrUpdate"></el-input>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="dialogFormVisible = false">取 消</el-button>
+                <el-button type="primary" @click="createOrUpdate">确 定</el-button>
+            </div>
+        </el-dialog>
+    </div>
+</script>
+```
+
+index.js
+```JavaScript
+getActionsDef: function () {
+            let self = this;
+            return {
+                width: 5,
+                def: [{
+                    name: '添加数据',
+                    handler() {
+                        self.formType = 'create';
+                        self.formTitle = '添加数据';
+                        self.form.name = '';
+                        self.form.index = '';
+                        self.dialogFormVisible = true;
+                    },
+                    icon: 'plus'
+                }]
+            }
+        },
+        getPaginationDef: function () {
+            return {
+                pageSize: 10,
+                pageSizes: [10, 20, 50]
+            }
+        },
+        getRowActionsDef: function () {
+            let self = this;
+            return [{
+                type: 'primary',
+                handler(row) {
+                    self.formType = 'edit';
+                    self.form.name = row.name;
+                    self.form.index = row.index;
+                    self.formTitle = '编辑数据';
+                    self.dialogFormVisible = true;
+                },
+                name: '编辑'
+            }, {
+                type: 'danger',
+                handler(row) {
+                    if (row.flag === 'true') {
+                        self.$message.success("该信息不能删除！")
+                    } else {
+                        self.$confirm('确认删除该数据?', '提示', {
+                            confirmButtonText: '确定',
+                            cancelButtonText: '取消',
+                            type: 'warning'
+                        }).then(function () {
+                            let url = Flask.url_for("delete", {name: row.name, index: row.index});
+                            axios.delete(url).then(function (response) {
+                                self.getCategories();
+                                self.$message.success("删除成功！")
+                            }).catch(self.showError)
+                        });
+
+                    }
+                },
+                name: '删除'
+            }]
+        },
+        getCategories: function () {
+            let url = Flask.url_for("get_base_data");
+            let self = this;
+            axios.get(url).then(function (response) {
+                self.tableData = response.data.results;
+            });
+        },
+        createOrUpdate: function () {
+            let self = this;
+            if (self.form.name === '') {
+                self.$message.error('数据不能为空！');
+                return
+            }
+            if (self.formType === 'create') {
+                let url = Flask.url_for("add");
+                axios.post(url, {
+                    name: self.form.name
+                }).then(function (response) {
+                    self.getCategories();
+                    self.dialogFormVisible = false;
+                    self.$message.success('添加成功！')
+                }).catch(self.showError);
+            } else {
+                let url = Flask.url_for("update", {});
+                axios.put(url, {
+                    name: self.form.name,
+                    index: self.form.index
+                }).then(function (response) {
+                    self.getCategories();
+                    self.dialogFormVisible = false;
+                    self.$message.success('修改成功！')
+                }).catch(self.showError);
+            }
+        }
+}
+```
+
+因为demo比较简单，数据存在内存中，仅仅用于展示，读者可自行结合数据库
+[代码请戳github](https://github.com/qianbin01/Vue-flask)
+
+![](http://oh343spqg.bkt.clouddn.com/9de122fd5266d016d4e0690d902bd40734fa35d1.jpg)
+所以<br>
+人生苦短，我用python<br>
+ 
+
+
+
+
