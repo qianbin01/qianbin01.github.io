@@ -1,0 +1,656 @@
+---
+layout:     post
+title:      "前端开发指南"
+subtitle:   "简单点，搭建Demo的方式简单点"
+date:       2018-7-5 23:59:00
+author:     "QB"
+header-img: "img/vue.jpg"
+catalog: true
+tags:
+    - Vue.js
+    - 前端
+---
+##前端开发指南
+初稿于2018/07/06完成
+###一、规范指南
+>1. [简要概述](#oneone)
+2. [规范目的](#onetwo)
+3. [使用说明](#onethree)
+###二、文件规范
+>1. [文件命名规则](#twoone)
+2. [文件存放位置](#twotwo)
+3. [CSS书写规范](#twothree)
+4. [HTML书写规范](#twofour)
+5. [JavaScript书写规范](#twofive)
+6. [图片规范](#twosix)
+7. [注释规范](#twoseven)
+8. [版本控制及命名](#twoeight)
+###三、其他相关
+>1. [移动端适配](#threeone)
+2. [web端适配](#threetwo)
+3. [vue开发](#threethree)
+4. [npm使用及webpack常见配置](#threefour)
+5. [参考资源](#threefive)
+
+###[四、相关示例及操作步骤](#fourdemo)
+
+###[五、个人开发经验](#five)
+
+###一、规范指南
+####<div id="oneone">1.1简要概述
+开发高效化，沟通低耗化，前端开发指南你值得拥有。
+####<div id="onetwo">1.2规范目的</div>
++ 提高前端开发效率。
++ 减少沟通所需成本。
++ 减少/避免重复编码的出现。
++ 协助新人快速融入。
++ 熟悉完备自身技能。
+####<div id="onethree">1.3使用说明</div>
++ 该规范仅适用前端开发
++ 该规范应根据情况实时更新
++ 以下规范仅为推荐适用，根据不同开发环境应以“第一适应”为标准
+
+###二、文件规范
+####<div id="twoone">2.1文件命名规则</div>
++ 文件名称统一用英文单词、数字、必要时可添加下划线组成
++ 多单词文件采用驼峰方式，首字母小写，且每个单词首字母为大写如indexHeader.html
++ 不得包含汉字、空格和特殊字符
++ 首字母不得为数字
++ 命名须包含相关信息
++ 必要时可使用拼音全字母简写代替文件名，但不能单独使用首字母简写，如首页可命名为shouye.html但不可命名为sy.html
+
+####<div id="twotwo">2.2文件存放位置</div>
+
+vue项目文件一览
+```
+├─build webpack  打包相关配置文件，通常按需修改webpack开头的三个文件
+├─config node  启动相关配置文件,端口，代理，资源相对路径等问题修改此处
+├─node_modules 前端项目依赖包，基本不需要处理
+├─src 主要编写这个
+    ├─components 编写的组件如header.vue等
+    ├─config 配置信息，如api:base_url等
+    ├─router 路由配置文件
+    ├─store vuex状态管理文件（项目简单可不使用）
+    ├─style 自定义样式文件，常用做全局style或共同style
+    ├─utils 工具文件夹，常包含网络请求，常用工具类方法，全局变量等
+    ├─views 界面组件
+        ├─home 含有特定关系的相关界面组件(名字结合修改)
+        └─container(同上)
+    ├─App.vue 实际挂载到页面中的主文件，所有界面是由该文件的路由view替换而成
+    └─main.js 默认入口js文件，常用操作有，vue挂载全局组件，全局方法等 
+├─static 静态文件
+    ├─img
+    ├─media
+    └─....
+├─.babelrc babel配置文件
+├─.gitignore 版本管理git需要忽略的规则文件
+├─index.html 入口页面，可在此处引入一些cdn的资源
+├─package.json 依赖库集合，npm install xx后 会自动编辑
+├─package-lock.json 上者的优化，限定版本及下载地址，防止团队开发依赖库版本不同
+├─README.md 说明文档
+
+```
+
+####<div id="twothree">2.3CSS书写规范</div>
++ 包含但不限于2.1命名规范
++ class与id的使用: id是唯一的并是父级的, class是可以重复的并是子级的, 所以id仅使用在大的模块上, class可用在重复使用率高及子级中; 
++ class与id命名: 大的框架命名比如header/footer/wrapper/left/right之类的应有框架搭建人命名，但分配小组后负责模块可自行命名.其他样式名称由 小写英文、数字、下划线 来组合命名, 如i_comment, fontred, width200; 避免使用中文拼音, 尽量使用简易的单词组合; 总之, 命名要语义化, 简明化。
++ class命名中若为子控件，应优先携带父控件简写
++ css属性书写顺序, 建议遵循 布局定位属性-->自身属性-->文本属性-->其他属性. 此条可根据自身习惯书写, 但尽量保证同类属性写在一起。
++ 书写代码前, 考虑并提高样式重复使用率。
++ 充分利用html自身属性及样式继承原理减少代码量。如div默认换行，span默认不换行
++ 尽量减少对性能有影响的属性，如position:absolute || float
++ 代码缩进与格式: 建议单行书写, 可用ide进行代码格式化
++ 伪类应共同编写
++ css语法的兼容性考虑
++ 同一个控件应按照如下顺序编写重定义的最先，伪类其次，自定义最后，便于自己和他人阅读！
+####scss
++ 应提取出常用属性形成方法使用，如居中于父控件等
+```
+声明
+@mixin locInCenter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+引用
+#container{
+    @include locInCenter;
+}
+```
++ 子控件编写应包含于父控件中
+```
+#header{
+    width:100%
+    ....
+    .header_title{ 包含于父控件中
+    }
+}
+```
++ [scss官方文档](https://www.sass.hk/docs/)
+
+####<div id="twofour">2.4HTML书写规范</div>
++ 避免使用过期元素如可用css实现的样式元素如```<font> </font>```等
++ 尽量避免使用内联样式表，在项目简单时可使用
++ 为了最大程度的发挥浏览器自动排版的功能，在一段完整的文字中请尽量不要使用```<br>和&nbsp;```来人工干预分段。
++ 空白尽量采用padding，margin， text-indent等css样式控制，而非各种空格
++ 文件的引入除cdn以外，本项目内尽量采用相对路径的方式
++ 一个元素中若子含有一个元素则不换行，除太长等必须换行条件以外。如
+```
+<div><img src=”../images/sample.gif”></div> 优先
+<div> 其次
+    <img src=”../../../../../static/images/home/sample.gif”>
+</div> 
+<div><img src=”../../../../../static/images/home/sample.gif”>尽量避免
+</div> 
+```
++ 尽量采用兼容性较高的语法及元素
++ [meta注意事项](https://blog.csdn.net/ts472960087/article/details/45890359)
+####<div id="twofive">2.5JavaScript书写规范</div>
++  逐步替换成es6语法格式，[先抛出文档让你们看看](http://es6.ruanyifeng.com/)
++  变量声明使用let/const替换原先的var，更注重代码块的作用域
++  箭头函数使用时，需考虑不能使用箭头函数的情况，避免bug因语法错误无法追踪
++  同步回调中this作用域的替换
++  另起文件书写js文件优于直接写在html中，特定框架除外
++  文件引入严格采用export 与 import模式，详情见上述第一条
++  代码应考虑效率，避免多层循环的出现
++  编码前封装考虑应结合实际需求是否需要
++  变量命名: 驼峰式命名. 首字母须小写, 如qbComeOn; 
++  类命名: 驼峰式命名.首字母大写, 如 PeoPelControl;
++  函数命名: 同变量命名
++  命名语义化, 尽可能利用英文单词，有需要时可选择拼音，但尽量避免拼音简写的出现;
++  方法不宜过长，尽量控制在50行以内
++  语句应以封号结尾
+
+####<div id="twosix">2.6图片规范</div>
++ 所有图片需按需存放在指定文件夹中
++ 所有图片需经过压缩方可使用，[压缩网站](https://tinypng.com/)
++ 命名语义化，可由小写字母，数字，下划线组成，但首字母必须为小写字母组成
+####<div id="twoseven">2.7注释规范</div>
++ html注释
+```html
+<html>
+<body>
+<!--这儿是注释-->
+</body>
+</html>
+```
++ css注释
+```css
+/* 某一段开始 */
+@mixin locInCenter {
+  position: absolute;//这里是行内注释
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+/* 某一段结束 */
+```
++ js注释
+```javascript
+ /**
+ * Returns x raised to the n-th power. 方法说明
+ *
+ * @param {number} x The number to raise. 参数说明
+ * @param {number} n The power, must be a natural number.
+ * @return {number} x raised to the n-th power.返回值说明
+ */
+function pow(x, n) {
+  ...//行内注释
+}
+/*
+这是一段长文本注释，
+描述下方所做行为或功能
+*/
+a.play();
+b.pause();
+```
+####<div id="twoeight">2.8版本控制及命名</div>
++ git版本控制,[话不多并抛了个文档给你](https://git-scm.com/docs)
++ 每日开发前应及时沟通同一项目下人员是否进行更新，若更新则需进行git pull/git fetch等同步工作
++ 代码合并冲突时，合理审查冲突片段，避免force merge
++ 避免在master上直接开发，对于develop开发还需另行建立个人分支
++ 版本号主要用于git tag标签及前端代码review审查使用
++ 版本号采取vx.x.x方式如v1.0.0方式分别对应为主版本号、次版本号、修订版本号,修订版本号奇数为beta测试版，偶数为release稳定发布版
+###三、其他相关
+####<div id="threeone">3.1移动端适配</div>
++ 主要采用阿里的rem.js方式依据屏幕宽度等比分成100份，1rem=10份，使用方式参考[rem.js](https://segmentfault.com/a/1190000008721148)
+####<div id="threetwo">3.2web端适配</div>
++ 浏览器内核一览：
+```
+1、Trident内核：代表作品是IE，腾讯、Maxthon（遨游）、360浏览器
+2、Gecko内核：Firefox -moz-
+3、Webkit内核：Safari、曾经的Chrome -webkit-
+4、Presto内核：Opera -o-
+5、Blink内核：Chrome
+```
++ 采用@media方式编写不同尺寸的样式代码
++ 使用框架中响应式布局，若同时需适配移动端需使用bootstrap栅栏模式且根据不同屏分别采用xs sm md lg如
+```html
+<!--数值依实际而定-->
+<div class="col-xs-12 col-sm-8 col-md-6 col-lg-4"></div>
+```
+####<div id="threethree">3.3vue开发</div>
++ [抛文档](https://cn.vuejs.org/v2/guide/)
++ 本节主要简单介绍vue开发中，常用的vue指令或处理方式，详细项目开发见[相关示例](#fourdemo)
++ 常见的表单控件可用v-model进行双向绑定，直接操作数据，尽量避免dom操作
++ 父控件传给子控件中属性必须先在子控件中声明
++ 子控件不能直接修改父控件传的值
++ 子控件通过```$emit```的方式与父控件通信，具体见下方示例
++ 通过｛｛msg｝｝可直接在页面中渲染出msg值
++ 当与jinja2等模版语言冲突时，可使用v-text方式代替上述渲染
++ v-text全本文渲染，v-html富文本渲染，顾名思义会把字符中相应值渲染成对应的html格式
++ v-bind：xx指令可直接简写为：xx如v-bind:xx可简写成:id
++ v-on:xxx指令可直接简写为@xxx，如v-on:click可简写成@click
++ computed是计算属性，事实上和和data对象里的数据属性是同一类的（使用上） （场景：一个数据受多个数据影响）
++ watch:类似于监听机制+事件机制（场景：一个数据影响多个数据）
++ class与style的绑定见上述文档
++ v-if不会渲染，v-show会渲染，用style样式控制，v-show适用于切换频繁的场景，v-if适用于一次显示，相对少的切换的场景
++ v-for中尽量指定key
++ 当 v-if 与 v-for 一起使用时，v-for 具有比 v-if 更高的优先级。注意嵌套顺序
++ 通常在mounted生命周期中执行初始化工作，但keepalive组件中有例外
++ 键盘事件，表单修饰符见上述文档
++ 局部注册组件中必须在components中引入
++ mixin中编写共用部分
++ vue transition 只能使用在条件渲染展示（v-if v-show），动态组件，vue-router路由切换中可以使用
++ 父组件通过```$refs```方式调用子组件方法
++ 非父子间通信采用eventbus的方式进行通信，详情见下方示例
++ vue单页面模式设置标题方式
+```
+//设置在每个路由的meta中设置title
+[{
+    path:'/login',
+    meta: {
+      title: '登录页面'
+    },
+    component:'login'
+}]
+//监听每次路由切换
+router.beforeEach((to, from, next) => {
+      window.document.title = to.meta.title;
+      next()
+})
+```
+####<div id="threefour">3.4npm使用及webpack常见配置</div>
++ npm全局使用淘宝镜像
+```
+1.npm install -g cnpm --registry=https://registry.npm.taobao.org
+2.使用cnpm 指令代替npm进行下载
+```
++ 一般采用 ```npm i -S 依赖库@版本号``` 的方式下载文件  i(install) -s(-save,本地依赖包防止污染全局环境）
++ vue-cli脚手架自动生成的webpack一般无需修改，当使用scss编译时，需修改并下载下方插件
+```
+1.cnpm i -S sass-loader
+2.cnpm i -S node-sass
+```
++ 当使用外部cdn依赖包时需修改webpack如下
+```
+webpack.base.conf.js
+externals: {//与entry、output同级
+    vue: 'Vue',
+    'element-ui': 'ELEMENT'//elementui必须这么写
+  },
+
+```
+####<div id="threefive">3.5参考资源</div>
++ [sass](https://www.sass.hk/)
++ [rem.js](https://segmentfault.com/a/1190000008721148)
++ [es6](http://es6.ruanyifeng.com/)
++ [tinypng](https://tinypng.com/)
++ [git](https://git-scm.com/docs)
++ [vue](https://cn.vuejs.org/v2/guide/)
++ [vue-router](https://router.vuejs.org/zh/guide/)
++ [vuex](https://vuex.vuejs.org/zh/guide/)
++ [npm](https://www.npmjs.com.cn/)
++ [webpack](https://www.webpackjs.com/concepts/)
++ [yarn](https://yarnpkg.com/en/cn/docs)
++ [element-ui](http://element-cn.eleme.io/#/zh-CN/component/installation)
++ [vue组件库](http://vue.awesometiny.com/)
++ [轮子工厂](http://www.wheelsfactory.cn/#/home)
++ [cdn](http://www.bootcdn.cn/)
+
+###<div id="fourdemo">四、相关示例及操作步骤</div>
+初始化相关
+```
+1.下载node与npm
+2.cnpm i -g vue-cli 仅第一次需要
+3.配置好webstrom下node环境
+	3.1 ctrl+shift+s
+	3.2 Languages&Frameworkds
+	3.3 Node.js and NPM
+	3.4 修改Node interpreter
+4.新建Vue项目
+	4.1 File->new->project->Vue.js
+	4.2 修改项目名，首次新建可能需要调整vue-cli路径，模版采用webpack
+	4.3 next->next->...
+	4.4 vue-router yes
+	4.5 ESLint no
+	4.6 unit no
+	4.7 e2e no
+	4.8 use NPM
+5.添加scss依赖
+	5.1 cnpm i -S sass-loader
+	5.2 cnpm i -S node-sass
+6.依据上述2.2文件存放位置，增删文件夹
+7.修改vue模版，具体操作见个人开发经验
+8.搭建开发基本框架
+	8.1 创建src/utils/axios_http.js网络请求框架(详情见下方)并export
+	8.2 创建src/utils/common.js常用方法合集并export
+	8.3 创建src/utils/web_store.js 用于存储全局变量信息并export
+	8.4 创建src/utils/mixin.js 用于vue组件中共有部分并export
+	8.5 创建src/config/base_info.js 用于记录api地址等信息并export
+	8.6 将上述文件在main.js中import，并按需挂载或使用
+		import WEB_BASE_STORE from './utils/web_base_store'
+		import {http_get, http_post} from './utils/axios_http'
+		import commonMethods from './utils/commonUtils'
+		...
+		new Vue({
+			  el: '#app',
+			  router,
+			  store,
+			  components: {App},
+			  template: '<App/>'
+		});
+		...
+		Vue.prototype.$WEB_BASE_STORE = WEB_BASE_STORE;
+		Vue.prototype.$httpGet = http_get;
+		Vue.prototype.$httpPost = http_post;
+	8.6 引入第三方ui框架（需要的话，如element-ui）
+		8.6.1 cnpm i -s element-ui
+		8.6.2 引入element-ui
+			import ElementUI from 'element-ui'
+			import 'element-ui/lib/theme-chalk/index.css';
+			Vue.use(ElementUI);
+	8.7 修改配置文件防止打包后静态文件找不到
+		8.7.1 打开project/config/index.js
+		8.7.2 修改其中build下assetsPublicPath为'./'
+	8.8 添加KeepAlive组件
+		8.8.1 打开/src/App.vue
+		8.8.2 
+		修改<router-view></router-view>为
+		<keep-alive>
+	      <router-view v-if="$route.meta.keepAlive"></router-view>
+	    </keep-alive>
+	    <router-view v-if="!$route.meta.keepAlive"></router-view>
+9 启动
+	9.1 本地调试 npm run dev
+	9.2 打包 npm run build 生成dist文件必须运行于服务器如（nginx,tomcat）
+	9.3 git clone后的代码 先执行npm install 再执行上述命令
+10 开发相关
+	10.1 新建vue文件中，name必须于router中对应
+	10.2 若静态资源为网络请求所获得的，必须使用require引入
+	10.3 挂载在全局vue中的方法使用如下，在某vue文件中的methods中 采取this.$挂载名的方式使用
+	10.4 若未挂载的外部js文件需通过import的方式引入，若是组件的话还需在components中声明
+	10.5 vue-router采用按需加载的方式，在项目中主要在src/router/index.js体现（详情见下方）
+	
+```
+网络请求封装
+```javascript
+import axios from 'axios'
+import BASE_INFO from '../config/base_info'
+
+//设置全局header
+axios.defaults.baseURL = BASE_INFO.BASE_HTTP_URL;
+axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
+axios.defaults.headers['Accept'] = 'application/json, text/plain, */*';
+
+//请求带上验证头
+axios.interceptors.request.use(
+  config => {
+    if (sessionStorage['MMAuthorization']) {
+      config.headers['MMAuthorization'] = sessionStorage['MMAuthorization'];
+    }
+    return config;
+  },
+  err => {
+    return Promise.reject(err);
+  });
+
+
+
+//封装get方法
+export function http_get(url, res) {
+  axios.get(url).then(res).catch(e => {
+	  console.log(e)
+  })
+}
+
+/**
+ * 封装post方法
+ *
+ * @param {url} 请求路径
+ * @param {data} 对象形式数据
+ * @param {flag} 采取表单或json标志位
+ * @param {res} 请求成功回调函数
+ */
+export function http_post(url, data, flag, res) {
+  if (!flag) { //表单方式
+    let formData = new URLSearchParams();
+    for (let key in data) {
+      formData.append(key, data[key])
+    }
+    axios.post(url, formData).then(res).catch(e => {
+	    console.log(e)
+    })
+  } else { //json方式
+    axios.post(url, data, {
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8'
+      }
+    }).then(res).catch(e => {
+      console.log(e)
+    })
+  }
+}
+
+
+
+```
+
+路由按需加载
+```javascript
+import Vue from 'vue'
+import Router from 'vue-router'
+const index = r => require.ensure([], () => r(require('../views/index')), 'index');//按需加载
+
+export default new Router({
+  routes: [
+      {path: '/', redirect: 'index'},
+	  {
+		  path: '*', 
+		  name: 'index ',
+		  component: index, 
+		  children:[]//填写子路由，格式与此相同
+		  meta: {title: '首页'}},
+  }
+})
+```
+
+常用方法封装
+```javascript
+//获取指定元素的属性值
+export const getStyle = (element, attr, NumberMode = 'int') => {
+	let target;
+	// scrollTop 获取方式不同，没有它不属于style，而且只有document.body才能用
+	if (attr === 'scrollTop') {
+	  target = element.scrollTop;
+	} else if (element.currentStyle) {
+	  target = element.currentStyle[attr];
+	} else {
+	  target = document.defaultView.getComputedStyle(element, null)[attr];
+	}
+	//在获取 opactiy 时需要获取小数 parseFloat
+	return NumberMode === 'float' ? parseFloat(target) : parseInt(target);
+};
+//检查是否为手机浏览
+export const checkUA = () => {
+  return (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent))
+};
+
+在vue文件中使用需先引入，如下
+import {checkUA} from './commonUtils'
+
+```
+全局变量存储封装
+```javascript
+let WEB_BASE_STORE = {};
+export default WEB_BASE_STORE
+```
+vue共有变量封装
+```javascript
+export const mixin = {
+  data() {
+    return {
+    }
+  },
+  computed: {
+  },
+  methods: {
+  },
+  directives: {//挂载指令，特定节点中滚动加载
+    'load-more': { 
+      bind: (el, binding) => {
+        el.addEventListener('scroll', () => {
+          let scrollHeight = el.scrollHeight;
+          let scrollTop = el.scrollTop;
+          let height = el.clientHeight;
+          if (scrollTop + height >= scrollHeight - 3) {
+            binding.value();
+          }
+        }, false);
+      }
+    }
+  }
+};
+在vue文件中需引入
+如下
+import {mixin} from '../utils/mixin'
+export default {
+    name: 'index',
+    mixins: [mixin],
+    data() {
+	    getData(){
+		//这里执行滑动后需要的操作
+		}
+    }
+    ...
+}
+节点使用加载更多的方式如下
+<div v-load-more="getData"></div>
+```
+项目api等配置信息
+```javascript
+let BASE_INFO = {};
+if (document.domain.includes('我们生产环境的域名')) { //环境辨别
+	BASE_INFO = {
+	  BASE_HTTP_URL: 'https://api生产环境地址',
+	  ...
+	};
+} else {
+	BASE_INFO = {
+	  BASE_HTTP_URL: 'http://api开发环境地址',
+	  ...
+	};
+}
+export default BASE_INFO
+```
+
+###<div id="five">五、个人开发经验</div>
++ for in循环下标，for of直接循环对象
++ 循环数组可使用 for of的方式
+```
+for(let item of lists)｛
+    to do something;
+｝
+```
++ 箭头函数的使用
+```
+let sumNums= (num1, num2) => num1 + num2;//当就一个变量时可省略括号
+```
++ 模版字符串
+```
+let url=`api/getUserDetail?id=${id}`后者id为变量
+```
++ 函数默认值
+```
+function showName(name='qb'){
+    return name;
+}
+```
++ 对象初始化键值对可重名赋值
+```
+let name='name'
+let age='age'
+let people{name,age}
+```
++ 函数简写方式
+```
+getName: function() {
+    console.log(this.name)
+}
+简写为
+getName(){
+    console.log(this.name)
+}
+```
++ 展开运算符
+```
+let oldList=[1,2,3]
+let newList=[...oldList,4,5,6]
+//newList:[1,2,3,4,5,6]
+const number = [1,2,3,4,5]
+const [first, ...rest] = number
+rest //2,3,4,5
+```
++ 开发流程：网络框架，基本信息，常用方法等环境搭建->界面框架->节点分析并添加相应id与class->样式添加->api调用->细节修改->bug修复及日常维护
++ 个人webstrom经验（windows）
+ + 快捷键
+     + ctrl+F 在文件内快速查找代码
+     + F3 查找下一个
+     + shift+F3 查找上一个
+     + ctrl+R 文件内代码替换
+     + ctrl+shift+R 指定目录内代码批量替换
+     + ctrl+shift+F 指定目录内代码批量查找
+     + ctrl+R 文件内代码替换
+     + ctrl+shift+L 格式化代码
+     + shift+tab/tab 减少/扩大缩进
+     + ctrl+G 到指定行的代码
+     + ctrl+shift+A 快速查找并使用编辑器所有功能
+     + ctrl+alt+s 打开配置窗口
+     + ctrl+D 复制当前行
+     + ctrl+Y 删除一行
+     + shift+enter 重新开始一行（无论光标在哪个位置）
+ + vue模版
+ ```
+ ctrl+alt+s->Editor->File and code Templates->vue
+ //new.vue
+ <template>
+    <div class="sub_container">
+    </div>
+ </template>
+ 
+ <script>
+    export default {
+        name: '${NAME}',
+        data() {
+          return {}
+        },
+        mounted() {},
+        methods: {},
+        computed: {},
+        components: {}
+      }
+  </script>
+  <style scoped lang="scss">
+    
+  </style>
+ ```
++ 开发注意事项
+1. 不要过早优化
+2. 封装重复代码但不要过度封装
+3. 避免重复造轮子，开发功能前及时沟通
+4. copy的代码需审查完整方可引入
+5. 项目结构必须有条理不可“混为一谈”
+6. ......
++ 及时沟通，及时沟通，不要蒙头干
